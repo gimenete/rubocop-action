@@ -78,8 +78,8 @@ def run_rubocop
   Dir.chdir(@GITHUB_WORKSPACE) {
     errors = JSON.parse(`rubocop --format json`)
   }
-  print errors
   conclusion = "success"
+  count = 0
 
   errors["files"].each do |file|
     path = file["path"]
@@ -90,6 +90,7 @@ def run_rubocop
       message = offense["message"]
       location = offense["location"]
       annotation_level = @annotation_levels[severity]
+      count = count + 1
 
       if annotation_level == "failure"
         conclusion = "failure"
@@ -105,7 +106,13 @@ def run_rubocop
     end
   end
 
-  return { "annotations" => annotations, "conclusion" => conclusion }
+  output = {
+    "title": @check_name,
+    "summary": "#{count} offense(s) found",
+    "annotations" => annotations
+  }
+
+  return { "output" => output, "conclusion" => conclusion }
 end
 
 def run
