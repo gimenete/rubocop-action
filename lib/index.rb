@@ -112,8 +112,8 @@ def run
   id = create_check()
   begin
     results = run_rubocop()
-    output = reults["output"]
-    annotations = reults["annotations"]
+    output = results["output"]
+    annotations = results["annotations"]
 
     update_check(id, conclusion, output)
 
