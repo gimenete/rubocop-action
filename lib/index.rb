@@ -55,7 +55,7 @@ def update_check(id, conclusion, output)
 
   http = Net::HTTP.new('api.github.com', 443)
   http.use_ssl = true
-  path = "/repos/#{@owner}/#{@repo}/check-runs"
+  path = "/repos/#{@owner}/#{@repo}/check-runs/#{id}"
 
   resp = http.patch(path, body.to_json, @headers)
 
