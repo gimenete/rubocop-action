@@ -4,4 +4,4 @@ set -e
 
 gem install rubocop
 
-ruby /action/lib/run.rb
+ruby /action/lib/index.rb
