@@ -120,7 +120,7 @@ def run
   begin
     results = run_rubocop()
     conclusion = results["conclusion"]
-    annotations = results["annotations"]
+    output = results["output"]
 
     update_check(id, conclusion, output)
 
