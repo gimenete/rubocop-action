@@ -7,6 +7,9 @@ require 'date'
 @GITHUB_TOKEN = ENV["GITHUB_TOKEN"]
 @GITHUB_WORKSPACE = ENV["GITHUB_WORKSPACE"]
 
+puts "@GITHUB_TOKEN"
+puts @GITHUB_TOKEN
+
 @event = JSON.parse(File.read(ENV["GITHUB_EVENT_PATH"]))
 @repository = @event["repository"]
 @owner = @repository["owner"]["login"]
@@ -20,6 +23,9 @@ require 'date'
   "Authorization": "Bearer #{@GITHUB_TOKEN}",
   "User-Agent": 'rubocop-action'
 }
+
+print @headers
+puts "."
 
 def create_check
   body = {
