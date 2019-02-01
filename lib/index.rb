@@ -29,6 +29,9 @@ def create_check
     "started_at" => Time.now.iso8601
   }
 
+  print body.to_json
+  print @headers
+
   http = Net::HTTP.new('api.github.com', 443)
   http.use_ssl = true
   path = "/repos/#{@owner}/#{@repo}"
