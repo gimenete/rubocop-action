@@ -1,14 +1,11 @@
 require 'net/http'
 require 'json'
-require 'date'
+require 'time'
 
 @GITHUB_SHA = ENV["GITHUB_SHA"]
 @GITHUB_EVENT_PATH = ENV["GITHUB_EVENT_PATH"]
 @GITHUB_TOKEN = ENV["GITHUB_TOKEN"]
 @GITHUB_WORKSPACE = ENV["GITHUB_WORKSPACE"]
-
-puts "@GITHUB_TOKEN"
-puts @GITHUB_TOKEN
 
 @event = JSON.parse(File.read(ENV["GITHUB_EVENT_PATH"]))
 @repository = @event["repository"]
@@ -24,15 +21,12 @@ puts @GITHUB_TOKEN
   "User-Agent": 'rubocop-action'
 }
 
-print @headers
-puts "."
-
 def create_check
   body = {
     "name" => @check_name,
     "head_sha" => @GITHUB_SHA,
     "status" => "in_progress",
-    "started_at" => Date.new
+    "started_at" => Time.now.iso8601
   }
 
   http = Net::HTTP.new('api.github.com', 443)
@@ -54,7 +48,7 @@ def update_check(id, conclusion, output)
     "name" => @check_name,
     "head_sha" => @GITHUB_SHA,
     "status" => 'completed',
-    "completed_at" => Date.new,
+    "completed_at" => Time.now.iso8601,
     "conclusion" => conclusion,
     "output" => output
   }
